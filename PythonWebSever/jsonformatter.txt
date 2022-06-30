@@ -1,0 +1,71 @@
+{
+	
+  "MyProject": [
+    {
+      "Name": "Lam Le",
+      "Age": "23",
+      "Position": "Project Manager",
+      "Experiences": [
+        {
+          "No": "1",
+          "Customer": "MARQUARDT",
+          "Role": "Embedded Engineer"
+        },
+        {
+          "No": "2",
+          "Customer": "FPT",
+          "Role": "C++ Engineer"
+        },
+        {
+          "No": "3",
+          "Customer": "LG",
+          "Role": "Qt Engineer"
+        }
+      ]
+    },
+    {
+      "Name": "Dung ND",
+      "Age": "27",
+      "Position": "Tech Leader",
+      "Experiences": [
+        {
+          "No": "1",
+          "Customer": "VNG",
+          "Role": "C++ Linux Engineer"
+        },
+        {
+          "No": "2",
+          "Customer": "AXon",
+          "Role": "Software Engineer"
+        },
+        {
+          "No": "3",
+          "Customer": "Pyramid",
+          "Role": "Developer"
+        }
+      ]
+    },
+    {
+      "Name": "Hieu DT",
+      "Age": "26",
+      "Position": "BUL Lead",
+      "Experiences": [
+        {
+          "No": "1",
+          "Customer": "Toyota",
+          "Role": "Backend Engineer"
+        },
+        {
+          "No": "2",
+          "Customer": "SamSung",
+          "Role": "Frontend Engineer"
+        },
+        {
+          "No": "3",
+          "Customer": "Hitachi",
+          "Role": "Fullstack Engineer"
+        }
+      ]
+    }
+  ]
+}
