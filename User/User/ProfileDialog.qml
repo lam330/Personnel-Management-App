@@ -48,7 +48,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 15
                 fillMode: Image.PreserveAspectFit
-                source: "images/depvkl.jpg"
+                source: "images/ava_Lam.png"
             }
 
             StackView {
@@ -101,29 +101,43 @@ Item {
             }
 
             Column {
-                id: textEditColumn
+                id: textFieldColumn
                 width: parent.width
                 anchors.left: avatar.right
                 anchors.leftMargin: 20
-                spacing: 25
+                spacing: 15
                 visible: false
-                TextEdit {
-                    id: nameTextEdit
+                TextField {
+                    id: nameTextFeild
                     width: parent.width
-                    text: "replaced name"
+                    placeholderText: "Enter name";
+                    background: Rectangle {
+                        border.color: "black"
+                        border.width: 2
+                    }
                 }
 
-                TextEdit {
-                    id: ageTextEdit
+                TextField {
+                    id: ageTextFeild
                     width: parent.width
-                    text: "replaced age"
+                    placeholderText: "Enter age";
+                    background: Rectangle {
+                        border.color: "black"
+                        border.width: 2
+                    }
                 }
 
-                TextEdit {
-                    id: posTextEdit
+                TextField {
+                    id: posTextFeild
                     width: parent.width
-                    text: "replaced position"
+                    placeholderText: "Enter position";
+                    background: Rectangle {
+                        border.color: "black"
+                        border.width: 2
+                    }
                 }
+
+
             }
 
             Label {
@@ -142,7 +156,7 @@ Item {
 
             TextArea {
                 id: expTextAreaId
-                placeholderText: "Replaced experiences"
+                placeholderText: "Enter experiences"
                 visible: false
                 background: Rectangle {
                     border.color: "black"
@@ -162,9 +176,9 @@ Item {
                     onClicked: {
                         //change label to Edit: remove olds + create news
 
-                        textEditColumn.visible = true
+                        textFieldColumn.visible = true
                         expTextAreaId.visible = true
-                        stackViewId1.replace(textEditColumn)
+                        stackViewId1.replace(textFieldColumn)
                         stackViewId2.replace(expTextAreaId)
                     }
                 }
@@ -187,3 +201,4 @@ Item {
         }
     }
 }
+

@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>images/depvkl.jpg</file>
+        <file>images/ava_Dung.png</file>
+        <file>images/ava_Hieu.png</file>
+        <file>images/ava_Lam.png</file>
     </qresource>
 </RCC>

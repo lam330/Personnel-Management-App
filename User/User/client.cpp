@@ -48,13 +48,13 @@ void Client::initConnections()
 int Client::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    qDebug() << "rowCount => mMembers.size() = " << mMembers.size();
+//    qDebug() << "rowCount => mMembers.size() = " << mMembers.size();
     return mMembers.size();
 }
 
 QVariant Client::data(const QModelIndex &index, int role) const
 {
-     qDebug() << "data()";
+//     qDebug() << "data()";
     if (index.row() < 0 || index.row() >= mMembers.count()) {
         return QVariant();
     }
@@ -85,7 +85,7 @@ QVariant Client::data(const QModelIndex &index, int role) const
 
 bool Client::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    qDebug() << "setData(const QModelIndex &index, const QVariant &value, int role)";
+//    qDebug() << "setData(const QModelIndex &index, const QVariant &value, int role)";
 
     Person person = mMembers[index.row()];
     bool somethingChanged = false;
@@ -141,7 +141,7 @@ Qt::ItemFlags Client::flags(const QModelIndex &index) const
 
 QHash<int, QByteArray> Client::roleNames() const
 {
-    qDebug() << "roleNames()";
+//    qDebug() << "roleNames()";
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
     roles[AgeRole] = "age";
@@ -173,7 +173,7 @@ void Client::recSwitchPerson_slot()
 void Client::getDataFromSource()
 {
 
-    qDebug() << "getDataFromSource()";
+//    qDebug() << "getDataFromSource()";
     emit requireHostData();
 
 }

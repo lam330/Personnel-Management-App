@@ -100,6 +100,7 @@ Window {
                         contentDialog.age = model.age
                         contentDialog.pos = model.position
                         contentDialog.exp = model.experience
+                        contentDialog.imageSource = getAvatar(mListViewId.currentIndex);
                     }
                 }
             }
@@ -127,56 +128,16 @@ Window {
         id: contentDialog
     }
 
-    //Dialog
-//    Dialog {
-//        id: contentDialog
 
-//        x: (parent.width - width) / 2
-//        y: (parent.height - height) / 2
-//        width: Math.min(parent.width, parent.height) / 3 * 2
-//        //contentHeight: logo.height * 2
-//        contentHeight: parent.height/2 // This doesn't cause the binding loop.
-//        parent: Overlay.overlay
+    function getAvatar(index) {
+        var avaArray = [
+                    "ava_Lam.png",
+                    "ava_Dung.png",
+                    "ava_Hieu.png"
+                ];
+        return ("images/" + avaArray[index]);
+    }
 
-//        modal: true
-//        title: "Profile"
-//        standardButtons: Dialog.Close//
-
-//        Flickable {
-//            id: flickable
-//            clip: true
-//            anchors.fill: parent
-//            contentHeight: column.height
-
-//            Column {
-//                id: column
-//                spacing: 20
-//                width: parent.width
-
-//                Image {
-//                    id: logo
-//                    width: parent.width / 2
-//                    anchors.horizontalCenter: parent.horizontalCenter
-//                    fillMode: Image.PreserveAspectFit
-//                    source: "images/depvkl.jpg"
-//                }
-
-//                Label {
-//                    width: parent.width
-//                    text: "Experiences"
-//                    wrapMode: Label.Wrap
-//                }
-//            }
-
-//            ScrollIndicator.vertical: ScrollIndicator {
-//                parent: contentDialog.contentItem
-//                anchors.top: flickable.top
-//                anchors.bottom: flickable.bottom
-//                anchors.right: parent.right
-//                anchors.rightMargin: -contentDialog.rightPadding + 1
-//            }
-//        }
-//    }
 
 }
 

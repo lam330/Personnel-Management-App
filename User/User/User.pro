@@ -1,5 +1,7 @@
 QT += quick
 QT       += remoteobjects
+QT += sql
+
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -7,6 +9,7 @@ QT       += remoteobjects
 
 SOURCES += \
         client.cpp \
+        databasemanager.cpp \
         main.cpp
 
 RESOURCES += qml.qrc \
@@ -29,4 +32,5 @@ DISTFILES += \
     simpleswitch.rep
 
 HEADERS += \
-    client.h
+    client.h \
+    databasemanager.h
