@@ -60,7 +60,6 @@ private:
     QNetworkReply *mNetReply;
     QByteArray *mDataBuffer;
     QVector<Person> mMembers;
-    static Server* mInstancePtr;
     QTimer *checkTimer;
 
 

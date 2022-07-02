@@ -1,19 +1,30 @@
 #include "databasemanager.h"
+#include "client.h"
 
-DatabaseManager::DatabaseManager(QObject *parent)
-    : QObject{parent}
+DatabaseManager &DatabaseManager::instance()
+{
+    static DatabaseManager database;
+    return database;
+}
+
+DatabaseManager::DatabaseManager()
 {
     //Create file db
-    QString path = "E:/Qt_again/MyProject/Database/database14.db";
+    QString path = "E:/Qt_again/MyProject/My-project-IPC-Thread-SQlite-Networking/Database/database17.db";
     db = QSqlDatabase::addDatabase("QSQLITE");
     qDebug() << "The connection name: " << QSqlDatabase::connectionNames();
     db.setDatabaseName(path);
     bool test = db.open();
 
     if(test) {
-        qDebug() << "Opened data file lllll";
+        qDebug() << "Opened data file";
     }
-    generateTables();
+    //generateTables();
+}
+
+DatabaseManager::DatabaseManager(QSharedPointer<SimpleSwitchReplica> ptr)
+{
+
 }
 
 void DatabaseManager::generateTables()
@@ -49,7 +60,7 @@ void DatabaseManager::generateTables()
     }
 }
 
-void DatabaseManager::insertPerson(const int index, const Person &member)
+void DatabaseManager::insertPerson(const int index, const Person& member)
 {
     QSqlQuery query(db);
 
@@ -64,17 +75,22 @@ void DatabaseManager::insertPerson(const int index, const Person &member)
     }
 }
 
-//void DatabaseManager::insertProject(const int index, const Project &project)
-//{
-//    QSqlQuery query(db);
+void DatabaseManager::insertProject(const int index, const Project &project, const int memberId)
+{
+    QSqlQuery query(db);
 
-////    QString formattedStr = QString("insert into Projects (projectID, number, customer, role, memberID)"\
-////                                   " values(%1, %2, '%3', '%4', %5)").arg(QString::number(index), QString::number(project.number()), project.customer(), project.role(), QString::number(project.memberId()));
-//    qDebug() << "formattedStr of insertProject: " << formattedStr;
-//    bool rc =  query.exec(formattedStr);
-//    if(rc != 1) {
-//        qDebug() << QString("insert project: %1 failed").arg(project.customer());
-//    } else {
-//        qDebug() << QString("insert %1 successfully").arg(project.customer());
-//    }
-//}
+    QString formattedStr = QString("insert into Projects (projectID, number, customer, role, memberID)"\
+                                   " values(%1, %2, '%3', '%4', %5)").arg(QString::number(index), QString::number(project.number()), project.customer(), project.role(), QString::number(memberId));
+    qDebug() << "formattedStr of insertProject: " << formattedStr;
+    bool rc =  query.exec(formattedStr);
+    if(rc != 1) {
+        qDebug() << QString("insert project: %1 failed").arg(project.customer());
+    } else {
+        qDebug() << QString("insert %1 successfully").arg(project.customer());
+    }
+}
+
+void DatabaseManager::storeModel()
+{
+
+}

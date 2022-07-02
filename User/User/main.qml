@@ -13,12 +13,6 @@ Window {
         id : mListViewId
         anchors.fill: parent
         model : myModel
-//        delegate : ItemDelegate {
-//            id: itemDelegateId
-//            text: "" + model.name + " " + model.age
-//            font.pointSize: 10
-//            width: parent.width
-//        }
         delegate: delegateId
 
         header: headerId
@@ -54,22 +48,6 @@ Window {
                 opacity: 0.1
             }
         }
-
-
-
-//        ListModel {
-//            id : mModelId
-//            ListElement {
-//                name: "Lam Le"
-//            }
-//            ListElement {
-//                name: "Dung ND"
-//            }
-//            ListElement {
-//                name: "Hieu DT"
-//            }
-//        }
-
 
         Component {
             id : delegateId
@@ -118,16 +96,31 @@ Window {
         anchors.bottomMargin: 50
         //anchors.top: mListViewId.bottom
         onClicked: {
-            console.log("Clicked on button1")
+            console.log("Clicked on getdataBtn")
             myModel.getDataFromSource()
 
+        }
+    }
+
+    Button {
+        id : storeModelBtn
+        text: "Store model"
+        width: 500
+        height: 40
+
+        anchors.horizontalCenter: mListViewId.horizontalCenter
+        anchors.bottom: getDataBtn.top
+        anchors.bottomMargin: 30
+        onClicked: {
+            console.log("Clicked on storeBtn")
+            myDatabase.generateTables()
+            myModel.storeModel()
         }
     }
 
     ProfileDialog {
         id: contentDialog
     }
-
 
     function getAvatar(index) {
         var avaArray = [

@@ -147,4 +147,4 @@ void Server::startSend(const QVector<Person> listOfMembers)
         }
 }
 
-Server* Server::mInstancePtr = nullptr;// static attribute hafta be defined outside of class
+//Server* Server::mInstancePtr = nullptr;// static attribute hafta be defined outside of class

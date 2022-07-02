@@ -21,6 +21,7 @@ class Client : public QAbstractListModel
     };
 public:
     Client(QSharedPointer<SimpleSwitchReplica> ptr);
+
     Client();
     ~Client() {
         qDebug() << "Client die";
@@ -39,6 +40,10 @@ public:
     //Help methods
 
 
+    //store Data
+    Q_INVOKABLE void storeModel();
+
+
 Q_SIGNALS:
     void echoEditedPerson(Person editedPerson);
     void requireHostData();
@@ -46,9 +51,11 @@ public Q_SLOTS:
     void recSwitchPerson_slot(); // slot to receive source person
     void getDataFromSource();
     void timeout_slot();
+     QVector<Person> getMembers();
 private:
     Person clientSwichPerson;
     QSharedPointer<SimpleSwitchReplica> reptr;// holds reference to replica
+    QSharedPointer<QRemoteObjectDynamicReplica> reDptr;//holds dynamic ref to replica
     QTimer *stateChangeTimer;
 
     QVector<Person> mMembers;

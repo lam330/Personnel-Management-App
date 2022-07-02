@@ -1,4 +1,5 @@
 #include "client.h"
+#include "databasemanager.h"
 
 Client::Client()
 {
@@ -48,13 +49,13 @@ void Client::initConnections()
 int Client::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-//    qDebug() << "rowCount => mMembers.size() = " << mMembers.size();
+    //    qDebug() << "rowCount => mMembers.size() = " << mMembers.size();
     return mMembers.size();
 }
 
 QVariant Client::data(const QModelIndex &index, int role) const
 {
-//     qDebug() << "data()";
+    //     qDebug() << "data()";
     if (index.row() < 0 || index.row() >= mMembers.count()) {
         return QVariant();
     }
@@ -85,7 +86,7 @@ QVariant Client::data(const QModelIndex &index, int role) const
 
 bool Client::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-//    qDebug() << "setData(const QModelIndex &index, const QVariant &value, int role)";
+    //    qDebug() << "setData(const QModelIndex &index, const QVariant &value, int role)";
 
     Person person = mMembers[index.row()];
     bool somethingChanged = false;
@@ -139,9 +140,23 @@ Qt::ItemFlags Client::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable;
 }
 
+void Client::storeModel()
+{
+    int count = 0;
+    for(int i = 0;i < mMembers.size(); i++) {
+        Person tempMember = mMembers.at(i);
+        DatabaseManager::instance().insertPerson(i, tempMember);
+        for(int j = 0; j < tempMember.projects().size(); j++) {
+            count++;
+            Project tempProject = tempMember.projects().at(j);
+            DatabaseManager::instance().insertProject(count, tempProject, i);
+        }
+    }
+}
+
 QHash<int, QByteArray> Client::roleNames() const
 {
-//    qDebug() << "roleNames()";
+    //    qDebug() << "roleNames()";
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
     roles[AgeRole] = "age";
@@ -173,7 +188,7 @@ void Client::recSwitchPerson_slot()
 void Client::getDataFromSource()
 {
 
-//    qDebug() << "getDataFromSource()";
+    //    qDebug() << "getDataFromSource()";
     emit requireHostData();
 
 }
@@ -182,4 +197,9 @@ void Client::timeout_slot()// check connection
 {
 
 
+}
+
+QVector<Person> Client::getMembers()
+{
+    return mMembers;
 }

@@ -20,15 +20,18 @@ public:
     DatabaseManager(const DatabaseManager &) = delete;
     DatabaseManager & operator = (const DatabaseManager &) = delete;
 
-    void generateTables();
-    void insertPerson(const int index, const Person& member);
-    void insertProject(const int index, const Project& project);
+    Q_INVOKABLE void generateTables();
+    Q_INVOKABLE void insertPerson(const int index, const Person& member);
+    Q_INVOKABLE void insertProject(const int index, const Project& project, const int memberId);
+    Q_INVOKABLE void storeModel();
+
 
 signals:
 
 private:
     QSqlDatabase db;
-    explicit DatabaseManager(QObject *parent = nullptr);
+    explicit DatabaseManager();
+    DatabaseManager(QSharedPointer<SimpleSwitchReplica> ptr);
 
 };
 

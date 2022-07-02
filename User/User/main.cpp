@@ -3,6 +3,7 @@
 #include <QQmlContext>
 
 #include "client.h"
+#include "databasemanager.h"
 
 
 int main(int argc, char *argv[])
@@ -22,7 +23,9 @@ int main(int argc, char *argv[])
     Client rswitch(ptr); // create client switch object and pass reference of replica to it
 
     QQmlApplicationEngine engine;
+
     engine.rootContext()->setContextProperty("myModel", &rswitch);
+    engine.rootContext()->setContextProperty("myDatabase", &DatabaseManager::instance());
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
