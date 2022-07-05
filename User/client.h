@@ -43,6 +43,7 @@ public:
     //store Data
     Q_INVOKABLE void storeModel();
     Q_INVOKABLE void loadDataFromDatabase();
+    Q_INVOKABLE void deleteData();
 
 
 Q_SIGNALS:

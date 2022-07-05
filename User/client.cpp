@@ -157,8 +157,17 @@ void Client::storeModel()
 void Client::loadDataFromDatabase()
 {
     qDebug() << "loadDataFromDatabase()";
-    DatabaseManager::instance().selectData();
+    beginResetModel();
+    mMembers = DatabaseManager::instance().selectData();
+    endResetModel();
+}
 
+void Client::deleteData()
+{
+    const int index = mMembers.size();
+    beginResetModel();
+    mMembers.clear();
+    endResetModel();
 }
 
 QHash<int, QByteArray> Client::roleNames() const

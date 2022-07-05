@@ -90,7 +90,7 @@ void DatabaseManager::insertProject(const int index, const Project &project, con
     }
 }
 
-QVector<Person> DatabaseManager::selectData()
+QVector<Person> DatabaseManager::   selectData()
 {
     QSqlQuery queryProject(db);
     QSqlQuery queryPerson(db);
@@ -117,7 +117,7 @@ QVector<Person> DatabaseManager::selectData()
 
     while(queryPerson.next()) {
         QVector<Project> emptyProjects;
-        Person tempPerson(queryPerson.value(0).toString(), queryPerson.value(1).toInt(), queryPerson.value(3).toString(), emptyProjects);
+        Person tempPerson(queryPerson.value(0).toString(), queryPerson.value(1).toInt(), queryPerson.value(2).toString(), emptyProjects);
         members.append(tempPerson);
     }
 

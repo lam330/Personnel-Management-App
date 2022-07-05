@@ -97,6 +97,7 @@ Window {
         //anchors.top: mListViewId.bottom
         onClicked: {
             console.log("Clicked on getdataBtn")
+            myModel.deleteData()
             myModel.getDataFromSource()
 
         }
@@ -129,6 +130,7 @@ Window {
         anchors.bottomMargin: 30
         onClicked: {
             console.log("Clicked on loadDataBtn")
+            myModel.deleteData()
             myModel.loadDataFromDatabase()
         }
     }

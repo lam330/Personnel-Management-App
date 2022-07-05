@@ -60,10 +60,7 @@ void Server::rep_to_source(Person clientPerson)
 void Server::source_to_rep()
 {
     Server::instance().fetchData(QUrl("http://localhost:8080/")); //acsync
-//    for(int i = 0; i < Server::instance().getMembers().size(); i++) {
-//        qDebug() << "i = " << i;
-//        setPerson(Server::instance().getMembers().at(i));
-    //    }
+
 }
 
 void Server::timeout_slot()
@@ -145,6 +142,7 @@ void Server::startSend(const QVector<Person> listOfMembers)
             qDebug() << "i = " << i;
             setPerson(listOfMembers.at(i));
         }
+    mMembers.clear();
 }
 
 //Server* Server::mInstancePtr = nullptr;// static attribute hafta be defined outside of class
