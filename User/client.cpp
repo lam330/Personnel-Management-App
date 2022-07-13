@@ -28,7 +28,7 @@ void Client::initConnections()
     // connect source replica signal currStateChanged() with client's recSwitchState() slot to receive source's current state
     QObject::connect(reptr.data(), &SimpleSwitchReplica::personChanged, this, &Client::recSwitchPerson_slot);
     // connect client's echoSwitchState(..) signal with replica's server_slot(..) to echo back received state
-    QObject::connect(this, &Client::echoEditedPerson, reptr.data(), &SimpleSwitchReplica::rep_to_source);
+//    QObject::connect(this, &Client::echoEditedPerson, reptr.data(), &SimpleSwitchReplica::rep_to_source);
 
     //check state
     QObject::connect(reptr.data(), &QRemoteObjectReplica::stateChanged, [&](QRemoteObjectReplica::State state, QRemoteObjectReplica::State oldState){

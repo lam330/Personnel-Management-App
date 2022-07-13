@@ -49,17 +49,15 @@ Server &Server::instance()
     return server;
 }
 
-void Server::rep_to_source(Person clientPerson)
-{
-    qDebug() << "Replica person is " << clientPerson.name() << clientPerson.age();
-    for(int i = 0; i < clientPerson.projects().size(); i++) {
-        qDebug() << clientPerson.projects().at(i).customer();
-    }
-}
 
 void Server::source_to_rep()
 {
     Server::instance().fetchData(QUrl("http://localhost:8080/")); //acsync
+
+}
+
+void Server::source_to_rep2()
+{
 
 }
 
@@ -91,27 +89,45 @@ void Server::dataReadFinished()
         //Grab the value array
         QJsonObject data = jsonDoc.object();
 
-        //query by key => get member in CURRENT project
-        QJsonArray memberArray = data["MyProject"].toArray();
+        //query by key => get all projects in project list
+        QJsonArray projectArray = data["ListProjects"].toArray();
+        for(int i = 0; i < projectArray.size(); i++) {
+            QJsonObject project = projectArray.at(i).toObject();//object
+            QJsonArray memberArray1 = project["Project1"].toArray();
+            QJsonArray memberArray2 = project["Project2"].toArray();
 
-        //get members of current project
-        for ( int i = 0; i < memberArray.size() ; i++){
-            QJsonObject member = memberArray.at(i).toObject();//object
-            QJsonArray projectArray = member["Experiences"].toArray();//type JsonArray
+            //Get members of project1
+            for ( int i = 0; i < memberArray1.size() ; i++){
+                QJsonObject member = memberArray1.at(i).toObject();//object
+                QJsonArray projectArray = member["Experiences"].toArray();//type JsonArray
 
-            //get projects (experiences) of each member
-            for (int j = 0; j < projectArray.size(); j++){
-                QJsonObject   tempProject = projectArray.at(j).toObject();
-                Project project(tempProject["No"].toString().toInt(), tempProject["Customer"].toString(), tempProject["Role"].toString());
-                projectList.append(project);
+                //get projects (experiences) of each member
+                for (int j = 0; j < projectArray.size(); j++){
+                    QJsonObject   tempProject = projectArray.at(j).toObject();
+                    Project project(tempProject["No"].toString().toInt(), tempProject["Customer"].toString(), tempProject["Role"].toString());
+                    projectList.append(project);
+                }
+                Person person(member["Name"].toString(), member["Age"].toString().toInt(), member["Position"].toString(), projectList);
+                mMembers.append(person);
+                projectList.clear();
             }
 
-            Person person(member["Name"].toString(), member["Age"].toString().toInt(), member["Position"].toString(), projectList);
+            //Get members of project2
+            for ( int i = 0; i < memberArray2.size() ; i++){
+                QJsonObject member = memberArray2.at(i).toObject();//object
+                QJsonArray projectArray = member["Experiences"].toArray();//type JsonArray
 
-            mMembers.append(person);
+                //get projects (experiences) of each member
+                for (int j = 0; j < projectArray.size(); j++){
+                    QJsonObject   tempProject = projectArray.at(j).toObject();
+                    Project project(tempProject["No"].toString().toInt(), tempProject["Customer"].toString(), tempProject["Role"].toString());
+                    projectList.append(project);
+                }
+                Person person(member["Name"].toString(), member["Age"].toString().toInt(), member["Position"].toString(), projectList);
+                mMembers2.append(person);
+                projectList.clear();
+            }
 
-
-            projectList.clear();
         }
 
         //check final output of fectch
@@ -123,9 +139,17 @@ void Server::dataReadFinished()
             }
         }
 
-        if(memberArray.size() !=0){
-             //resetModel();
+        qDebug() << "\n\nmMembers2.size(): " << mMembers2.size();
+        for( int i = 0; i < mMembers2.size(); i++) {
+            qDebug() << "mMembers2: " << mMembers2.at(i).name();
+            for(int j =0 ;j < mMembers2.at(i).projects().size(); j++) {
+                qDebug() << "projects: " << mMembers2.at(i).projects().at(j).customer();
+            }
         }
+
+//        if(memberArray.size() !=0){
+//             //resetModel();
+//        }
 
         //Clear the buffer
         mDataBuffer->clear();

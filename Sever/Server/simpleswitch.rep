@@ -4,6 +4,7 @@ POD Person(QString name, int age, QString position, QVector<Project> projects)
 class SimpleSwitch
 {
     PROP(Person person);
-    SLOT(rep_to_source(Person clientPerson));
+
     SLOT(source_to_rep());
+    SLOT(source_to_rep2());
 };

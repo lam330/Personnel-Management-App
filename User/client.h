@@ -57,7 +57,6 @@ public Q_SLOTS:
 private:
     Person clientSwichPerson;
     QSharedPointer<SimpleSwitchReplica> reptr;// holds reference to replica
-    QSharedPointer<QRemoteObjectDynamicReplica> reDptr;//holds dynamic ref to replica
     QTimer *stateChangeTimer;
 
     QVector<Person> mMembers;

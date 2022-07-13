@@ -1,9 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QQmlContext>
-
-#include "client.h"
-#include "databasemanager.h"
+#include "client2.h"
 
 
 int main(int argc, char *argv[])
@@ -17,13 +14,9 @@ int main(int argc, char *argv[])
     QRemoteObjectNode repNode; // create remote object node
     repNode.connectToNode(QUrl(QStringLiteral("local:switch"))); // connect with remote host node
     ptr.reset(repNode.acquire<SimpleSwitchReplica>()); // acquire replica of source from host node
-    Client rswitch(ptr); // create client switch object and pass reference of replica to it
+    Client2 rswitch(ptr); // create client switch object and pass reference of replica to it
 
     QQmlApplicationEngine engine;
-
-    engine.rootContext()->setContextProperty("myModel", &rswitch);
-    engine.rootContext()->setContextProperty("myDatabase", &DatabaseManager::instance());
-
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

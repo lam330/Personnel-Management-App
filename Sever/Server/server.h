@@ -35,8 +35,10 @@ public:
 
 
     //slots for exchanging data
-    virtual void rep_to_source(Person clientPerson);
+    //virtual void rep_to_source(Person clientPerson);
     virtual void source_to_rep();
+    virtual void source_to_rep2();
+
 
 public Q_SLOTS:
     void timeout_slot();
@@ -60,6 +62,8 @@ private:
     QNetworkReply *mNetReply;
     QByteArray *mDataBuffer;
     QVector<Person> mMembers;
+    QVector<Person> mMembers2;
+
     QTimer *checkTimer;
 
 
