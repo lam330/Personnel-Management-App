@@ -70,7 +70,9 @@ Window {
                     anchors.fill: parent
                     onClicked: {
                         console.log("Clicked on :" + model.name)
-                        mListViewId.currentIndex = index;
+                        mListViewId.currentIndex = index;//no this lead to problem
+
+                        console.log("Clicked on index:" + mListViewId.currentIndex)
                         contentDialog.openDialog()
 
                         //How get right index??
@@ -99,7 +101,6 @@ Window {
             console.log("Clicked on getdataBtn")
             myModel.deleteData()
             myModel.getDataFromSource()
-
         }
     }
 

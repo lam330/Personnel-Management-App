@@ -10,7 +10,8 @@ SOURCES += \
         client2.cpp \
         main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    resource.qrc
 
 REPC_REPLICA = simpleswitch.rep
 

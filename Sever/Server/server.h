@@ -47,12 +47,12 @@ public Q_SLOTS:
 
 signals:
     void notifyQml(QString parameter);//notify Sever UI when stop download + parse json data
-    void notifyPersonSender(const QVector<Person> listOfMembers);//async networking
+    void notifyPersonSender(const int ordinal);//async networking
 
 private slots:
     void dataReadyRead();
     void dataReadFinished();//Parse Json
-    void startSend(const QVector<Person> listOfMembers);
+    void startSend(const int ordinal);
 
 private:
     //explicit Sever(SimpleSwitchSimpleSource *parent = nullptr);
@@ -61,9 +61,9 @@ private:
     QNetworkAccessManager *mNetManager;
     QNetworkReply *mNetReply;
     QByteArray *mDataBuffer;
-    QVector<Person> mMembers;
-    QVector<Person> mMembers2;
-
+    QVector<Person> mMembers;//project1 members
+    QVector<Person> mMembers2;//project2 members
+    int ordinal;
     QTimer *checkTimer;
 
 

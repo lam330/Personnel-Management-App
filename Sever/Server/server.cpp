@@ -52,13 +52,16 @@ Server &Server::instance()
 
 void Server::source_to_rep()
 {
+    ordinal = 1;
     Server::instance().fetchData(QUrl("http://localhost:8080/")); //acsync
 
 }
 
 void Server::source_to_rep2()
 {
-
+    qDebug() << "source_to_rep2()";
+    ordinal = 2;
+    Server::instance().fetchData(QUrl("http://localhost:8080/")); //acsync
 }
 
 void Server::timeout_slot()
@@ -157,16 +160,26 @@ void Server::dataReadFinished()
 
     //notify qml done
     emit notifyQml("Done roi nha");
-    emit notifyPersonSender(mMembers);
+    emit notifyPersonSender(ordinal);
 }
 
-void Server::startSend(const QVector<Person> listOfMembers)
+void Server::startSend(const int ordinal)
 {
-    for(int i = 0; i < listOfMembers.size(); i++) {
-            qDebug() << "i = " << i;
-            setPerson(listOfMembers.at(i));
-        }
-    mMembers.clear();
+    qDebug() << "startSend()";
+    if(ordinal == 1) {
+        for(int i = 0; i < mMembers.size(); i++) {
+                qDebug() << "i = " << i;
+                setPerson(mMembers.at(i));
+            }
+        mMembers.clear();
+    } else {
+        for(int i = 0; i < mMembers2.size(); i++) {
+                qDebug() << "i2 = " << i;
+                setPerson(mMembers2.at(i));
+            }
+        mMembers.clear();
+    }
+
 }
 
 //Server* Server::mInstancePtr = nullptr;// static attribute hafta be defined outside of class

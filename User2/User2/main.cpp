@@ -1,6 +1,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include "client2.h"
+#include <QQmlContext>
+
 
 
 int main(int argc, char *argv[])
@@ -17,6 +19,7 @@ int main(int argc, char *argv[])
     Client2 rswitch(ptr); // create client switch object and pass reference of replica to it
 
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("myModel", &rswitch);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

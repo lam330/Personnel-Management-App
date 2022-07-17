@@ -164,7 +164,6 @@ void Client::loadDataFromDatabase()
 
 void Client::deleteData()
 {
-    const int index = mMembers.size();
     beginResetModel();
     mMembers.clear();
     endResetModel();
