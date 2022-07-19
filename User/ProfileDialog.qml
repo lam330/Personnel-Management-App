@@ -10,6 +10,10 @@ Item {
         contentDialog.open()
     }
 
+    function closeDialog() {
+        contentDialog.close()
+    }
+
     property alias imageSource: avatar.source
     property alias content: contentDialog.title
     property alias name: nameLabelId.text
@@ -118,7 +122,7 @@ Item {
                 }
 
                 TextField {
-                    id: ageTextFeild
+                    id: ageTextField
                     width: parent.width
                     placeholderText: "Enter age";
                     background: Rectangle {
@@ -128,7 +132,7 @@ Item {
                 }
 
                 TextField {
-                    id: posTextFeild
+                    id: posTextField
                     width: parent.width
                     placeholderText: "Enter position";
                     background: Rectangle {
@@ -146,6 +150,7 @@ Item {
                 height: parent.height / 1.5
                 anchors.top: avatar.bottom
                 anchors.topMargin: 10
+                anchors.horizontalCenter: parent.horizontalCenter
                 text: "Expereiences"
                 wrapMode: Label.Wrap
                 background: Rectangle {
@@ -186,7 +191,18 @@ Item {
                     text: "Close"
                     onClicked: {
                         //customDialog.privateClicked();
-                        close();
+//                        close();
+                        //save personinfo ne`
+                        console.log("close dialog nha")
+                        contentDialog.close()
+                        //move to prev state
+                        textFieldColumn.visible = false
+                        expTextAreaId.visible = false
+                        labelColumn.visible = true
+                        expLabelId.visible = true
+                        //save info
+                        console.log("edited name" + nameTextFeild.text);
+                        myModel.updatePerson(mListViewId.currentIndex, nameTextFeild.text, ageTextField.text, posTextField.text)
                     }
                 }
 

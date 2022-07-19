@@ -169,6 +169,17 @@ void Client::deleteData()
     endResetModel();
 }
 
+void Client::updatePerson(const int &index, const QString &newName, const QString &newAge, const QString &newPos)
+{
+    beginResetModel();
+    mMembers[index].setName(newName);
+    mMembers[index].setAge(newAge.toInt());
+    mMembers[index].setPosition(newPos);
+    endResetModel();
+//    mMembers[index].setProjects(newPos);
+//  Update sql
+}
+
 QHash<int, QByteArray> Client::roleNames() const
 {
     //    qDebug() << "roleNames()";

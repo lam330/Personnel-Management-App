@@ -29,6 +29,7 @@ void Client2::initConnections()
 
 void Client2::deleteData()
 {
+    qDebug() << "deleteData()";
     beginResetModel();
     mMembers.clear();
     endResetModel();

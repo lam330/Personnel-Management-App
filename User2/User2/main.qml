@@ -22,7 +22,7 @@ Window {
         //anchors.top: mListViewId.bottom
         onClicked: {
             console.log("Clicked on getdataBtn")
-//            myModel.deleteData()
+            myModel.deleteData()
             myModel.getDataFromSource()
 
         }

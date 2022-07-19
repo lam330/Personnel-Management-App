@@ -44,6 +44,8 @@ public:
     Q_INVOKABLE void storeModel();
     Q_INVOKABLE void loadDataFromDatabase();
     Q_INVOKABLE void deleteData();
+    //Update data
+    Q_INVOKABLE void updatePerson(const int& index, const QString& newName, const QString& newAge, const QString& newPos);
 
 
 Q_SIGNALS:

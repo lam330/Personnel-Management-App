@@ -178,6 +178,8 @@ void Server::startSend(const int ordinal)
                 setPerson(mMembers2.at(i));
             }
         mMembers.clear();
+        mMembers2.clear();
+
     }
 
 }

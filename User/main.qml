@@ -40,7 +40,7 @@ Window {
             id: highlightId
             Rectangle{
                 id: highlightRect
-                width: parent.width
+                width: 200//parent.width = null?
                 color: "yellowgreen"
                 radius: 14
                 border.color: "black"
@@ -53,7 +53,7 @@ Window {
             id : delegateId
             Rectangle {
                 id : rectangleId
-                width: parent.width
+                width: mListViewId.width
                 height: 50
                 color: "light gray"
                 border.color: "black"
