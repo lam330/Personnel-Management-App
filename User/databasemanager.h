@@ -23,6 +23,8 @@ public:
     Q_INVOKABLE void generateTables();
     Q_INVOKABLE void insertPerson(const int index, const Person& member);
     Q_INVOKABLE void insertProject(const int index, const Project& project, const int memberId);
+    Q_INVOKABLE void updatePerson(const int index, const Person& member);
+
     QVector<Person> selectData();
 
 signals:

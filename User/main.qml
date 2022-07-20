@@ -4,10 +4,17 @@ import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.12
 
 Window {
+    id: rootID
     width: 640
     height: 480
     visible: true
     title: qsTr("Manage information of members!")
+
+    Component.onCompleted: {
+        //load data from database
+        myModel.deleteData()
+        myModel.loadDataFromDatabase()
+    }
 
     ListView {
         id : mListViewId

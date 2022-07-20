@@ -178,6 +178,7 @@ void Client::updatePerson(const int &index, const QString &newName, const QStrin
     endResetModel();
 //    mMembers[index].setProjects(newPos);
 //  Update sql
+    DatabaseManager::instance().updatePerson(index, mMembers[index]);
 }
 
 QHash<int, QByteArray> Client::roleNames() const
@@ -213,7 +214,6 @@ void Client::recSwitchPerson_slot()
 
 void Client::getDataFromSource()
 {
-
     //    qDebug() << "getDataFromSource()";
     emit requireHostData();
 

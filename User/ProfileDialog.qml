@@ -198,10 +198,12 @@ Item {
                         //move to prev state
                         textFieldColumn.visible = false
                         expTextAreaId.visible = false
-                        labelColumn.visible = true
-                        expLabelId.visible = true
+                        stackViewId1.replace(labelColumn);
+                        stackViewId2.replace(expLabelId);
+
                         //save info
                         console.log("edited name" + nameTextFeild.text);
+                        console.log("Edited exp: " + expTextAreaId.text);
                         myModel.updatePerson(mListViewId.currentIndex, nameTextFeild.text, ageTextField.text, posTextField.text)
                     }
                 }

@@ -10,7 +10,7 @@ DatabaseManager &DatabaseManager::instance()
 DatabaseManager::DatabaseManager()
 {
     //Create file db
-    QString path = "E:/Qt_again/MyProject/My-project-IPC-Thread-SQlite-Networking/Database/database17.db";
+    QString path = "E:/Qt_again/MyProject/Github/Database/database.db";
     db = QSqlDatabase::addDatabase("QSQLITE");
     qDebug() << "The connection name: " << QSqlDatabase::connectionNames();
     db.setDatabaseName(path);
@@ -87,6 +87,21 @@ void DatabaseManager::insertProject(const int index, const Project &project, con
         qDebug() << QString("insert project: %1 failed").arg(project.customer());
     } else {
         qDebug() << QString("insert %1 successfully").arg(project.customer());
+    }
+}
+
+void DatabaseManager::updatePerson(const int index, const Person &member)
+{
+    QSqlQuery query(db);
+
+    QString formattedStr = QString("update TeamMembers set name = '%1', age = %2, position = '%3' where memberID = %4")
+                                   .arg(member.name(), QString::number(member.age()), member.position(), QString::number(index));
+    qDebug() << "formattedStr of insertProject: " << formattedStr;
+    bool rc =  query.exec(formattedStr);
+    if(rc != 1) {
+        qDebug() << QString("insert member: %1 failed").arg(member.name());
+    } else {
+        qDebug() << QString("insert %1 successfully").arg(member.name());
     }
 }
 
