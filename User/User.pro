@@ -10,7 +10,8 @@ QT += sql
 SOURCES += \
         client.cpp \
         databasemanager.cpp \
-        main.cpp
+        main.cpp \
+        mycheck.cpp
 
 RESOURCES += qml.qrc \
     resource.qrc
@@ -33,4 +34,5 @@ DISTFILES += \
 
 HEADERS += \
     client.h \
-    databasemanager.h
+    databasemanager.h \
+    mycheck.h

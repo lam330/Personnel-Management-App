@@ -191,7 +191,7 @@ Item {
                     text: "Close"
                     onClicked: {
                         //customDialog.privateClicked();
-//                        close();
+                        //                        close();
                         //save personinfo ne`
                         console.log("close dialog nha")
                         contentDialog.close()
@@ -204,7 +204,12 @@ Item {
                         //save info
                         console.log("edited name" + nameTextFeild.text);
                         console.log("Edited exp: " + expTextAreaId.text);
+                        myCheck.checkName(nameTextFeild.text);
+                        myCheck.checkAge(ageTextField.text);
+                        myCheck.checkPosition(posTextField.text);
                         myModel.updatePerson(mListViewId.currentIndex, nameTextFeild.text, ageTextField.text, posTextField.text)
+
+
                     }
                 }
 

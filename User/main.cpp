@@ -4,6 +4,7 @@
 
 #include "client.h"
 #include "databasemanager.h"
+#include "mycheck.h"
 
 
 int main(int argc, char *argv[])
@@ -19,10 +20,13 @@ int main(int argc, char *argv[])
     ptr.reset(repNode.acquire<SimpleSwitchReplica>()); // acquire replica of source from host node
     Client rswitch(ptr); // create client switch object and pass reference of replica to it
 
+    MyCheck myCheck;
+
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("myModel", &rswitch);
     engine.rootContext()->setContextProperty("myDatabase", &DatabaseManager::instance());
+    engine.rootContext()->setContextProperty("myCheck", &myCheck);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
