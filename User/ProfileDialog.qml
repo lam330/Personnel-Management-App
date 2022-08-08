@@ -21,8 +21,6 @@ Item {
     property alias pos: posLabelId.text
     property alias exp: expLabelId.text
 
-
-
     width: contentDialog.implicitWidth + 20
     height: contentDialog.implicitHeight + 20
 
@@ -202,14 +200,14 @@ Item {
                         stackViewId2.replace(expLabelId);
 
                         //save info
-                        console.log("edited name" + nameTextFeild.text);
-                        console.log("Edited exp: " + expTextAreaId.text);
-                        myCheck.checkName(nameTextFeild.text);
-                        myCheck.checkAge(ageTextField.text);
-                        myCheck.checkPosition(posTextField.text);
-                        myModel.updatePerson(mListViewId.currentIndex, nameTextFeild.text, ageTextField.text, posTextField.text)
+                        //console.log("Edited exp: " + expTextAreaId.text);
 
+                        myModel.updateProject(1, expTextAreaId.text);
 
+                        //update Person if inputs ok
+                        if(myCheck.checkName(nameTextFeild.text) && myCheck.checkAge(ageTextField.text) && myCheck.checkPosition(posTextField.text)) {
+                            myModel.updatePerson(mListViewId.currentIndex, nameTextFeild.text, ageTextField.text, posTextField.text)
+                        }
                     }
                 }
 

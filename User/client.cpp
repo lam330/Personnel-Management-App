@@ -1,5 +1,7 @@
 #include "client.h"
 #include "databasemanager.h"
+#include <QRegExp>
+#include <QStringList>
 
 Client::Client()
 {
@@ -179,6 +181,37 @@ void Client::updatePerson(const int &index, const QString &newName, const QStrin
 //    mMembers[index].setProjects(newPos);
 //  Update sql
     DatabaseManager::instance().updatePerson(index, mMembers[index]);
+}
+
+void Client::updateProject(const int &index, QString newProjects)
+{
+    //seperate input text => use regex => project1 \n project2 \n....\n projectn
+    QStringList splitedText = newProjects.split("\n");
+    for ( const auto& project : splitedText  )
+    {
+        qDebug() << project;//format of a project = no. customer role
+        QRegExp rx("([0-9]*).\\s([a-zA-Z]{1,10})\\s([a-zA-Z]{1,10})");
+        int pos = rx.indexIn(project);
+        QStringList elements = rx.capturedTexts();
+
+        QStringList::iterator it = elements.begin();
+        while (it != elements.end()) {
+            qDebug() << (*it);
+            ++it;
+        }
+    }
+
+//    QRegExp rx("");
+//    int pos = rx.indexIn("Length: 36 inches");
+//    QStringList list = rx.capturedTexts();
+//    // list is now ("36 inches", "36", "inches")
+
+//    //Reset model
+//    beginResetModel();
+////    mMembers[index].setName(newName);
+////    mMembers[index].setAge(newAge.toInt());
+////    mMembers[index].setPosition(newPos);
+//    endResetModel();
 }
 
 QHash<int, QByteArray> Client::roleNames() const

@@ -105,6 +105,21 @@ void DatabaseManager::updatePerson(const int index, const Person &member)
     }
 }
 
+void DatabaseManager::updateProject(const int index, const Project &project)
+{
+    QSqlQuery query(db);
+
+    QString formattedStr = QString("update Projects set number = %1, customer = '%2', role = '%3' where memberID = %4")
+                                   .arg(QString::number(project.number()), project.customer(), project.role(), QString::number(index));
+    qDebug() << "formattedStr of insertProject: " << formattedStr;
+    bool rc =  query.exec(formattedStr);
+    if(rc != 1) {
+        qDebug() << QString("insert project: %1 failed").arg(project.customer());
+    } else {
+        qDebug() << QString("insert %1 successfully").arg(project.customer());
+    }
+}
+
 QVector<Person> DatabaseManager::   selectData()
 {
     QSqlQuery queryProject(db);

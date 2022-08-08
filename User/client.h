@@ -46,6 +46,8 @@ public:
     Q_INVOKABLE void deleteData();
     //Update data
     Q_INVOKABLE void updatePerson(const int& index, const QString& newName, const QString& newAge, const QString& newPos);
+    Q_INVOKABLE void updateProject(const int& index, QString newProjects);
+
 
 
 Q_SIGNALS:

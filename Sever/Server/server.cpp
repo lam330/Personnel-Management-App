@@ -166,22 +166,20 @@ void Server::dataReadFinished()
 void Server::startSend(const int ordinal)
 {
     qDebug() << "startSend()";
+
     if(ordinal == 1) {
         for(int i = 0; i < mMembers.size(); i++) {
                 qDebug() << "i = " << i;
                 setPerson(mMembers.at(i));
             }
-        mMembers.clear();
     } else {
         for(int i = 0; i < mMembers2.size(); i++) {
                 qDebug() << "i2 = " << i;
                 setPerson(mMembers2.at(i));
             }
-        mMembers.clear();
-        mMembers2.clear();
-
     }
-
+    mMembers.clear();
+    mMembers2.clear();
 }
 
 //Server* Server::mInstancePtr = nullptr;// static attribute hafta be defined outside of class
