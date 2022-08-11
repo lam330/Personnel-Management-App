@@ -197,8 +197,8 @@ QT_INIT_METAOBJECT const QMetaObject Person::staticMetaObject = { {
 } };
 
 struct qt_meta_stringdata_SimpleSwitchReplica_t {
-    QByteArrayData data[12];
-    char stringdata0[184];
+    QByteArrayData data[15];
+    char stringdata0[219];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -211,21 +211,25 @@ QT_MOC_LITERAL(0, 0, 19), // "SimpleSwitchReplica"
 QT_MOC_LITERAL(1, 20, 17), // "RemoteObject Type"
 QT_MOC_LITERAL(2, 38, 12), // "SimpleSwitch"
 QT_MOC_LITERAL(3, 51, 22), // "RemoteObject Signature"
-QT_MOC_LITERAL(4, 74, 40), // "92cdf7a9d5282d4783e19460ed72e..."
+QT_MOC_LITERAL(4, 74, 40), // "53fdd2dba836bd9b4c009219637ff..."
 QT_MOC_LITERAL(5, 115, 13), // "personChanged"
 QT_MOC_LITERAL(6, 129, 0), // ""
 QT_MOC_LITERAL(7, 130, 6), // "Person"
 QT_MOC_LITERAL(8, 137, 6), // "person"
-QT_MOC_LITERAL(9, 144, 10), // "pushPerson"
-QT_MOC_LITERAL(10, 155, 13), // "source_to_rep"
-QT_MOC_LITERAL(11, 169, 14) // "source_to_rep2"
+QT_MOC_LITERAL(9, 144, 14), // "ordinalChanged"
+QT_MOC_LITERAL(10, 159, 7), // "ordinal"
+QT_MOC_LITERAL(11, 167, 10), // "pushPerson"
+QT_MOC_LITERAL(12, 178, 11), // "pushOrdinal"
+QT_MOC_LITERAL(13, 190, 13), // "source_to_rep"
+QT_MOC_LITERAL(14, 204, 14) // "source_to_rep2"
 
     },
     "SimpleSwitchReplica\0RemoteObject Type\0"
     "SimpleSwitch\0RemoteObject Signature\0"
-    "92cdf7a9d5282d4783e19460ed72e329eb44647d\0"
-    "personChanged\0\0Person\0person\0pushPerson\0"
-    "source_to_rep\0source_to_rep2"
+    "53fdd2dba836bd9b4c009219637ff126eb686f48\0"
+    "personChanged\0\0Person\0person\0"
+    "ordinalChanged\0ordinal\0pushPerson\0"
+    "pushOrdinal\0source_to_rep\0source_to_rep2"
 };
 #undef QT_MOC_LITERAL
 
@@ -235,38 +239,44 @@ static const uint qt_meta_data_SimpleSwitchReplica[] = {
        8,       // revision
        0,       // classname
        2,   14, // classinfo
-       4,   18, // methods
-       1,   46, // properties
+       6,   18, // methods
+       2,   62, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // classinfo: key, value
        1,    2,
        3,    4,
 
  // signals: name, argc, parameters, tag, flags
-       5,    1,   38,    6, 0x06 /* Public */,
+       5,    1,   48,    6, 0x06 /* Public */,
+       9,    1,   51,    6, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    1,   41,    6, 0x0a /* Public */,
-      10,    0,   44,    6, 0x0a /* Public */,
-      11,    0,   45,    6, 0x0a /* Public */,
+      11,    1,   54,    6, 0x0a /* Public */,
+      12,    1,   57,    6, 0x0a /* Public */,
+      13,    0,   60,    6, 0x0a /* Public */,
+      14,    0,   61,    6, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 7,    8,
+    QMetaType::Void, QMetaType::Int,   10,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 7,    8,
+    QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void,
     QMetaType::Void,
 
  // properties: name, type, flags
        8, 0x80000000 | 7, 0x00495009,
+      10, QMetaType::Int, 0x00495001,
 
  // properties: notify_signal_id
        0,
+       1,
 
        0        // eod
 };
@@ -278,9 +288,11 @@ void SimpleSwitchReplica::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->personChanged((*reinterpret_cast< Person(*)>(_a[1]))); break;
-        case 1: _t->pushPerson((*reinterpret_cast< Person(*)>(_a[1]))); break;
-        case 2: _t->source_to_rep(); break;
-        case 3: _t->source_to_rep2(); break;
+        case 1: _t->ordinalChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->pushPerson((*reinterpret_cast< Person(*)>(_a[1]))); break;
+        case 3: _t->pushOrdinal((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->source_to_rep(); break;
+        case 5: _t->source_to_rep2(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -292,6 +304,13 @@ void SimpleSwitchReplica::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
                 return;
             }
         }
+        {
+            using _t = void (SimpleSwitchReplica::*)(int );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SimpleSwitchReplica::ordinalChanged)) {
+                *result = 1;
+                return;
+            }
+        }
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty) {
@@ -300,6 +319,7 @@ void SimpleSwitchReplica::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         void *_v = _a[0];
         switch (_id) {
         case 0: *reinterpret_cast< Person*>(_v) = _t->person(); break;
+        case 1: *reinterpret_cast< int*>(_v) = _t->ordinal(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -337,29 +357,29 @@ int SimpleSwitchReplica::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 6)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 6;
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 1;
+        _id -= 2;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
@@ -370,6 +390,13 @@ void SimpleSwitchReplica::personChanged(Person _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void SimpleSwitchReplica::ordinalChanged(int _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

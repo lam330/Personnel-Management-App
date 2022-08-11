@@ -36,6 +36,7 @@ public:
 
 public Q_SLOTS:
     void recSwitchPerson_slot2(); // slot to receive source person
+    int recOrdinal_slot();// slot to receive source ordinal
     void getDataFromSource();
 
 

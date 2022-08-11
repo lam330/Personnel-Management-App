@@ -29,8 +29,10 @@ void Client::initConnections()
 
     // connect source replica signal currStateChanged() with client's recSwitchState() slot to receive source's current state
     QObject::connect(reptr.data(), &SimpleSwitchReplica::personChanged, this, &Client::recSwitchPerson_slot);
+    QObject::connect(reptr.data(), &SimpleSwitchReplica::ordinalChanged, this, &Client::recOrdinal_slot);
+
     // connect client's echoSwitchState(..) signal with replica's server_slot(..) to echo back received state
-//    QObject::connect(this, &Client::echoEditedPerson, reptr.data(), &SimpleSwitchReplica::rep_to_source);
+    //    QObject::connect(this, &Client::echoEditedPerson, reptr.data(), &SimpleSwitchReplica::rep_to_source);
 
     //check state
     QObject::connect(reptr.data(), &QRemoteObjectReplica::stateChanged, [&](QRemoteObjectReplica::State state, QRemoteObjectReplica::State oldState){
@@ -171,15 +173,18 @@ void Client::deleteData()
     endResetModel();
 }
 
-void Client::updatePerson(const int &index, const QString &newName, const QString &newAge, const QString &newPos)
+void Client::updatePerson(const int &index, const QString &newName, const QString &newAge, const QString &newPos, QString newProjects)
 {
     beginResetModel();
     mMembers[index].setName(newName);
     mMembers[index].setAge(newAge.toInt());
     mMembers[index].setPosition(newPos);
+
+    updateProject(index, newProjects);
+
     endResetModel();
-//    mMembers[index].setProjects(newPos);
-//  Update sql
+    //    mMembers[index].setProjects(newPos);
+    //  Update sql
     DatabaseManager::instance().updatePerson(index, mMembers[index]);
 }
 
@@ -195,23 +200,53 @@ void Client::updateProject(const int &index, QString newProjects)
         QStringList elements = rx.capturedTexts();
 
         QStringList::iterator it = elements.begin();
+        int i = 0;
+
+        Project tempProject;
+        QVector<Project> tempListProject;
+
         while (it != elements.end()) {
-            qDebug() << (*it);
+            qDebug() << i << "=" <<(*it);
+
+            switch (i) {
+            case 0:{
+                //do nothing
+                break;
+            }
+            case 1:{
+                tempProject.setNumber((*it).toInt());
+                break;
+            }
+            case 2:{
+                tempProject.setCustomer((*it));
+                break;
+            }
+            case 3:{
+                tempProject.setRole((*it));
+                break;
+            }
+            default:
+                break;
+            }
+            tempListProject.append(tempProject);
+
+
+            i++;
             ++it;
         }
+        beginResetModel();
+        mMembers[index].setProjects(tempListProject);
+        endResetModel();
+        DatabaseManager::instance().updateProject(index, tempProject);
+
     }
 
-//    QRegExp rx("");
-//    int pos = rx.indexIn("Length: 36 inches");
-//    QStringList list = rx.capturedTexts();
-//    // list is now ("36 inches", "36", "inches")
-
-//    //Reset model
-//    beginResetModel();
-////    mMembers[index].setName(newName);
-////    mMembers[index].setAge(newAge.toInt());
-////    mMembers[index].setPosition(newPos);
-//    endResetModel();
+    //    //Reset model
+    //    beginResetModel();
+    ////    mMembers[index].setName(newName);
+    ////    mMembers[index].setAge(newAge.toInt());
+    ////    mMembers[index].setPosition(newPos);
+    //    endResetModel();
 }
 
 QHash<int, QByteArray> Client::roleNames() const
@@ -236,13 +271,19 @@ void Client::recSwitchPerson_slot()
     }
 
     const int index = mMembers.size();
-    beginInsertRows(QModelIndex(),index,index);//Insert new person
 
-    mMembers.push_back(reptr.data()->person());
-
-    endInsertRows();
+    if(recOrdinal_slot() == 1) {
+        beginInsertRows(QModelIndex(),index,index);//Insert new person
+        mMembers.push_back(reptr.data()->person());
+        endInsertRows();
+    }
     qDebug() << "mMember.size() " << mMembers.size();
 
+}
+
+int Client::recOrdinal_slot()
+{
+    return reptr.data()->ordinal();
 }
 
 void Client::getDataFromSource()

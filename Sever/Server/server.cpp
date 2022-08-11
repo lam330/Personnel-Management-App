@@ -170,11 +170,14 @@ void Server::startSend(const int ordinal)
     if(ordinal == 1) {
         for(int i = 0; i < mMembers.size(); i++) {
                 qDebug() << "i = " << i;
+                //notify User for selecting data
+                setOrdinal(ordinal);
                 setPerson(mMembers.at(i));
             }
     } else {
         for(int i = 0; i < mMembers2.size(); i++) {
                 qDebug() << "i2 = " << i;
+                setOrdinal(ordinal);
                 setPerson(mMembers2.at(i));
             }
     }

@@ -13,6 +13,7 @@ void Client2::initConnections()
     QObject::connect(this, &Client2::requireHostData, reptr.data(), &SimpleSwitchReplica::source_to_rep2);
     // connect source replica signal currStateChanged() with client's recSwitchState() slot to receive source's current state
     QObject::connect(reptr.data(), &SimpleSwitchReplica::personChanged, this, &Client2::recSwitchPerson_slot2);
+    QObject::connect(reptr.data(), &SimpleSwitchReplica::ordinalChanged, this, &Client2::recOrdinal_slot);
 
     //check state
     QObject::connect(reptr.data(), &QRemoteObjectReplica::stateChanged, [&](QRemoteObjectReplica::State state, QRemoteObjectReplica::State oldState){
@@ -144,11 +145,18 @@ void Client2::recSwitchPerson_slot2()
     }
 
     const int index = mMembers.size();
-    beginInsertRows(QModelIndex(),index,index);//Insert new person
-    mMembers.push_back(reptr.data()->person());
-    endInsertRows();
+    if(recOrdinal_slot() == 2) {
+        beginInsertRows(QModelIndex(),index,index);//Insert new person
+        mMembers.push_back(reptr.data()->person());
+        endInsertRows();
+    }
 
     qDebug() << "mMember.size() " << mMembers.size();
+}
+
+int Client2::recOrdinal_slot()
+{
+    return reptr.data()->ordinal();
 }
 
 void Client2::getDataFromSource()

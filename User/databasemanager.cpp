@@ -109,7 +109,7 @@ void DatabaseManager::updateProject(const int index, const Project &project)
 {
     QSqlQuery query(db);
 
-    QString formattedStr = QString("update Projects set number = %1, customer = '%2', role = '%3' where memberID = %4")
+    QString formattedStr = QString("update Projects set number = %1, customer = '%2', role = '%3' where memberID = %4 and number = %1")
                                    .arg(QString::number(project.number()), project.customer(), project.role(), QString::number(index));
     qDebug() << "formattedStr of insertProject: " << formattedStr;
     bool rc =  query.exec(formattedStr);

@@ -202,11 +202,11 @@ Item {
                         //save info
                         //console.log("Edited exp: " + expTextAreaId.text);
 
-                        myModel.updateProject(1, expTextAreaId.text);
+//                        myModel.updateProject(mListViewId.currentIndex, expTextAreaId.text);
 
                         //update Person if inputs ok
                         if(myCheck.checkName(nameTextFeild.text) && myCheck.checkAge(ageTextField.text) && myCheck.checkPosition(posTextField.text)) {
-                            myModel.updatePerson(mListViewId.currentIndex, nameTextFeild.text, ageTextField.text, posTextField.text)
+                            myModel.updatePerson(mListViewId.currentIndex, nameTextFeild.text, ageTextField.text, posTextField.text, expTextAreaId.text)
                         }
                     }
                 }

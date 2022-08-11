@@ -102,8 +102,9 @@ class SimpleSwitchReplica : public QRemoteObjectReplica
 {
     Q_OBJECT
     Q_CLASSINFO(QCLASSINFO_REMOTEOBJECT_TYPE, "SimpleSwitch")
-    Q_CLASSINFO(QCLASSINFO_REMOTEOBJECT_SIGNATURE, "92cdf7a9d5282d4783e19460ed72e329eb44647d")
+    Q_CLASSINFO(QCLASSINFO_REMOTEOBJECT_SIGNATURE, "53fdd2dba836bd9b4c009219637ff126eb686f48")
     Q_PROPERTY(Person person READ person NOTIFY personChanged)
+    Q_PROPERTY(int ordinal READ ordinal NOTIFY ordinalChanged)
 
 public:
     SimpleSwitchReplica() : QRemoteObjectReplica() { initialize(); }
@@ -113,12 +114,12 @@ public:
         if (initialized)
             return;
         initialized = true;
-        qRegisterMetaType<Project>();
-        qRegisterMetaTypeStreamOperators<Project>();
         qRegisterMetaType<Person>();
         qRegisterMetaTypeStreamOperators<Person>();
         qRegisterMetaType<QVector<Project>>();
         qRegisterMetaTypeStreamOperators<QVector<Project>>();
+        qRegisterMetaType<Project>();
+        qRegisterMetaTypeStreamOperators<Project>();
         qRegisterMetaType<Person>();
         qRegisterMetaTypeStreamOperators<Person>();
         qRegisterMetaType<QRemoteObjectPendingCall>();
@@ -139,8 +140,9 @@ private:
     {
         SimpleSwitchReplica::registerMetatypes();
         QVariantList properties;
-        properties.reserve(1);
+        properties.reserve(2);
         properties << QVariant::fromValue(Person());
+        properties << QVariant::fromValue(int());
         setProperties(properties);
     }
 
@@ -156,9 +158,19 @@ public:
         return variant.value<Person >();
     }
 
+    int ordinal() const
+    {
+        const QVariant variant = propAsVariant(1);
+        if (!variant.canConvert<int>()) {
+            qWarning() << "QtRO cannot convert the property ordinal to type int";
+        }
+        return variant.value<int >();
+    }
+
 
 Q_SIGNALS:
     void personChanged(Person person);
+    void ordinalChanged(int ordinal);
 
 public Q_SLOTS:
     void pushPerson(Person person)
@@ -166,6 +178,13 @@ public Q_SLOTS:
         static int __repc_index = SimpleSwitchReplica::staticMetaObject.indexOfSlot("pushPerson(Person)");
         QVariantList __repc_args;
         __repc_args << QVariant::fromValue(person);
+        send(QMetaObject::InvokeMetaMethod, __repc_index, __repc_args);
+    }
+    void pushOrdinal(int ordinal)
+    {
+        static int __repc_index = SimpleSwitchReplica::staticMetaObject.indexOfSlot("pushOrdinal(int)");
+        QVariantList __repc_args;
+        __repc_args << QVariant::fromValue(ordinal);
         send(QMetaObject::InvokeMetaMethod, __repc_index, __repc_args);
     }
     void source_to_rep()

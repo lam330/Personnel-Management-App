@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Client2_t {
-    QByteArrayData data[6];
-    char stringdata0[76];
+    QByteArrayData data[7];
+    char stringdata0[92];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,12 +36,14 @@ QT_MOC_LITERAL(0, 0, 7), // "Client2"
 QT_MOC_LITERAL(1, 8, 15), // "requireHostData"
 QT_MOC_LITERAL(2, 24, 0), // ""
 QT_MOC_LITERAL(3, 25, 21), // "recSwitchPerson_slot2"
-QT_MOC_LITERAL(4, 47, 17), // "getDataFromSource"
-QT_MOC_LITERAL(5, 65, 10) // "deleteData"
+QT_MOC_LITERAL(4, 47, 15), // "recOrdinal_slot"
+QT_MOC_LITERAL(5, 63, 17), // "getDataFromSource"
+QT_MOC_LITERAL(6, 81, 10) // "deleteData"
 
     },
     "Client2\0requireHostData\0\0recSwitchPerson_slot2\0"
-    "getDataFromSource\0deleteData"
+    "recOrdinal_slot\0getDataFromSource\0"
+    "deleteData"
 };
 #undef QT_MOC_LITERAL
 
@@ -51,7 +53,7 @@ static const uint qt_meta_data_Client2[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -59,20 +61,22 @@ static const uint qt_meta_data_Client2[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   34,    2, 0x06 /* Public */,
+       1,    0,   39,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   35,    2, 0x0a /* Public */,
-       4,    0,   36,    2, 0x0a /* Public */,
+       3,    0,   40,    2, 0x0a /* Public */,
+       4,    0,   41,    2, 0x0a /* Public */,
+       5,    0,   42,    2, 0x0a /* Public */,
 
  // methods: name, argc, parameters, tag, flags
-       5,    0,   37,    2, 0x02 /* Public */,
+       6,    0,   43,    2, 0x02 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void,
+    QMetaType::Int,
     QMetaType::Void,
 
  // methods: parameters
@@ -89,8 +93,10 @@ void Client2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         switch (_id) {
         case 0: _t->requireHostData(); break;
         case 1: _t->recSwitchPerson_slot2(); break;
-        case 2: _t->getDataFromSource(); break;
-        case 3: _t->deleteData(); break;
+        case 2: { int _r = _t->recOrdinal_slot();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 3: _t->getDataFromSource(); break;
+        case 4: _t->deleteData(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -103,7 +109,6 @@ void Client2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
             }
         }
     }
-    Q_UNUSED(_a);
 }
 
 QT_INIT_METAOBJECT const QMetaObject Client2::staticMetaObject = { {
@@ -135,13 +140,13 @@ int Client2::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }
