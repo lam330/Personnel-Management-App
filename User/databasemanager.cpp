@@ -96,12 +96,12 @@ void DatabaseManager::updatePerson(const int index, const Person &member)
 
     QString formattedStr = QString("update TeamMembers set name = '%1', age = %2, position = '%3' where memberID = %4")
                                    .arg(member.name(), QString::number(member.age()), member.position(), QString::number(index));
-    qDebug() << "formattedStr of insertProject: " << formattedStr;
+    qDebug() << "formattedStr of updatePerson: " << formattedStr;
     bool rc =  query.exec(formattedStr);
     if(rc != 1) {
-        qDebug() << QString("insert member: %1 failed").arg(member.name());
+        qDebug() << QString("update member: %1 failed").arg(member.name());
     } else {
-        qDebug() << QString("insert %1 successfully").arg(member.name());
+        qDebug() << QString("update %1 successfully").arg(member.name());
     }
 }
 
@@ -111,12 +111,12 @@ void DatabaseManager::updateProject(const int index, const Project &project)
 
     QString formattedStr = QString("update Projects set number = %1, customer = '%2', role = '%3' where memberID = %4 and number = %1")
                                    .arg(QString::number(project.number()), project.customer(), project.role(), QString::number(index));
-    qDebug() << "formattedStr of insertProject: " << formattedStr;
+    qDebug() << "formattedStr of updatteProject: " << formattedStr;
     bool rc =  query.exec(formattedStr);
     if(rc != 1) {
-        qDebug() << QString("insert project: %1 failed").arg(project.customer());
+        qDebug() << QString("update project: %1 failed").arg(project.customer());
     } else {
-        qDebug() << QString("insert %1 successfully").arg(project.customer());
+        qDebug() << QString("update %1 successfully").arg(project.customer());
     }
 }
 

@@ -5,7 +5,6 @@ class SimpleSwitch
 {
     PROP(Person person);
     PROP(int ordinal);
-
     SLOT(source_to_rep());
     SLOT(source_to_rep2());
 };

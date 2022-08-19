@@ -10,12 +10,9 @@ Client::Client()
 
 // constructor
 Client::Client(QSharedPointer<SimpleSwitchReplica> ptr) :
-    reptr(ptr)
+    mReptr(ptr)
 {
     qDebug() << "Client::Client(QSharedPointer<SimpleSwitchReplica> ptr)";
-    stateChangeTimer = new QTimer(this); // Initialize timer
-    QObject::connect(stateChangeTimer, &QTimer::timeout, this, &Client::timeout_slot); // connect timeout() signal from stateChangeTimer to timeout_slot() of simpleSwitch
-    stateChangeTimer->start(2000); // Start timer and set timout to 2 seconds
     qDebug() << "Replica Node Started";
     initConnections();
 
@@ -25,22 +22,19 @@ void Client::initConnections()
 {
     // initialize connections between signals and slots
     //connect to get data => Sever begin fetching
-    QObject::connect(this, &Client::requireHostData, reptr.data(), &SimpleSwitchReplica::source_to_rep);
+    QObject::connect(this, &Client::requireHostData, mReptr.data(), &SimpleSwitchReplica::source_to_rep);
 
     // connect source replica signal currStateChanged() with client's recSwitchState() slot to receive source's current state
-    QObject::connect(reptr.data(), &SimpleSwitchReplica::personChanged, this, &Client::recSwitchPerson_slot);
-    QObject::connect(reptr.data(), &SimpleSwitchReplica::ordinalChanged, this, &Client::recOrdinal_slot);
+    QObject::connect(mReptr.data(), &SimpleSwitchReplica::personChanged, this, &Client::recSwitchPerson);
+    QObject::connect(mReptr.data(), &SimpleSwitchReplica::ordinalChanged, this, &Client::recOrdinal);
 
-    // connect client's echoSwitchState(..) signal with replica's server_slot(..) to echo back received state
-    //    QObject::connect(this, &Client::echoEditedPerson, reptr.data(), &SimpleSwitchReplica::rep_to_source);
-
-    //check state
-    QObject::connect(reptr.data(), &QRemoteObjectReplica::stateChanged, [&](QRemoteObjectReplica::State state, QRemoteObjectReplica::State oldState){
+    //check Replica state
+    QObject::connect(mReptr.data(), &QRemoteObjectReplica::stateChanged, [&](QRemoteObjectReplica::State state, QRemoteObjectReplica::State oldState){
         qDebug() << "Old state: " << oldState;
         qDebug() << "Current state: " << state;
     });
 
-    if(reptr->isReplicaValid()) {
+    if(mReptr->isReplicaValid()) {
         qDebug() << "replica has been initialized and has a valid connection";
     } else {
         qDebug() << "Replica connection failed";
@@ -166,7 +160,7 @@ void Client::loadDataFromDatabase()
     endResetModel();
 }
 
-void Client::deleteData()
+void Client::clearModel()
 {
     beginResetModel();
     mMembers.clear();
@@ -183,14 +177,15 @@ void Client::updatePerson(const int &index, const QString &newName, const QStrin
     updateProject(index, newProjects);
 
     endResetModel();
-    //    mMembers[index].setProjects(newPos);
-    //  Update sql
     DatabaseManager::instance().updatePerson(index, mMembers[index]);
 }
 
 void Client::updateProject(const int &index, QString newProjects)
 {
-    //seperate input text => use regex => project1 \n project2 \n....\n projectn
+    //Split input text => project1 \n project2 \n....\n projectn
+    Project tempProject;
+    QVector<Project> tempListProject;
+    qDebug() << "updateProject";
     QStringList splitedText = newProjects.split("\n");
     for ( const auto& project : splitedText  )
     {
@@ -198,60 +193,43 @@ void Client::updateProject(const int &index, QString newProjects)
         QRegExp rx("([0-9]*).\\s([a-zA-Z]{1,10})\\s([a-zA-Z]{1,10})");
         int pos = rx.indexIn(project);
         QStringList elements = rx.capturedTexts();
-
-        QStringList::iterator it = elements.begin();
+        QString str;
         int i = 0;
 
-        Project tempProject;
-        QVector<Project> tempListProject;
-
-        while (it != elements.end()) {
-            qDebug() << i << "=" <<(*it);
-
+        while(i != elements.size()) {
+            i++;
             switch (i) {
             case 0:{
                 //do nothing
                 break;
             }
             case 1:{
-                tempProject.setNumber((*it).toInt());
+                tempProject.setNumber(elements[i].toInt());
                 break;
             }
             case 2:{
-                tempProject.setCustomer((*it));
+                tempProject.setCustomer(elements[i]);
                 break;
             }
             case 3:{
-                tempProject.setRole((*it));
+                tempProject.setRole(elements[i]);
                 break;
             }
             default:
                 break;
             }
-            tempListProject.append(tempProject);
-
-
-            i++;
-            ++it;
+            if( i % 4 == 0) {
+                qDebug() << "i = " << i;
+                tempListProject.append(tempProject);
+                DatabaseManager::instance().updateProject(index, tempProject);
+            }
         }
-        beginResetModel();
         mMembers[index].setProjects(tempListProject);
-        endResetModel();
-        DatabaseManager::instance().updateProject(index, tempProject);
-
     }
-
-    //    //Reset model
-    //    beginResetModel();
-    ////    mMembers[index].setName(newName);
-    ////    mMembers[index].setAge(newAge.toInt());
-    ////    mMembers[index].setPosition(newPos);
-    //    endResetModel();
 }
 
 QHash<int, QByteArray> Client::roleNames() const
 {
-    //    qDebug() << "roleNames()";
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
     roles[AgeRole] = "age";
@@ -262,41 +240,32 @@ QHash<int, QByteArray> Client::roleNames() const
 
 
 
-void Client::recSwitchPerson_slot()
+void Client::recSwitchPerson()
 {
 
-    qDebug() << "Received source state "<<reptr.data()->person().name() << "  " << reptr.data()->person().age();
-    for(int i = 0; i < reptr.data()->person().projects().size(); i++) {
-        qDebug() << reptr.data()->person().projects().at(i).customer();
+    qDebug() << "Received source state "<<mReptr.data()->person().name() << "  " << mReptr.data()->person().age();
+    for(int i = 0; i < mReptr.data()->person().projects().size(); i++) {
+        qDebug() << mReptr.data()->person().projects().at(i).customer();
     }
 
     const int index = mMembers.size();
 
-    if(recOrdinal_slot() == 1) {
+    if(recOrdinal() == 1) {//Add data from source to model
         beginInsertRows(QModelIndex(),index,index);//Insert new person
-        mMembers.push_back(reptr.data()->person());
+        mMembers.push_back(mReptr.data()->person());
         endInsertRows();
     }
     qDebug() << "mMember.size() " << mMembers.size();
-
 }
 
-int Client::recOrdinal_slot()
+int Client::recOrdinal()
 {
-    return reptr.data()->ordinal();
+    return mReptr.data()->ordinal();
 }
 
 void Client::getDataFromSource()
 {
-    //    qDebug() << "getDataFromSource()";
     emit requireHostData();
-
-}
-
-void Client::timeout_slot()// check connection
-{
-
-
 }
 
 QVector<Person> Client::getMembers()

@@ -188,36 +188,31 @@ Item {
                 Button{
                     text: "Close"
                     onClicked: {
-                        //customDialog.privateClicked();
-                        //                        close();
-                        //save personinfo ne`
+                        //save personinfo
                         console.log("close dialog nha")
                         contentDialog.close()
                         //move to prev state
+                        nameTextFeild.clear()
+                        ageTextField.clear()
+                        posTextField.clear()
+                        posTextField.clear()
                         textFieldColumn.visible = false
                         expTextAreaId.visible = false
                         stackViewId1.replace(labelColumn);
                         stackViewId2.replace(expLabelId);
 
                         //save info
-                        //console.log("Edited exp: " + expTextAreaId.text);
-
-//                        myModel.updateProject(mListViewId.currentIndex, expTextAreaId.text);
-
                         //update Person if inputs ok
-                        if(myCheck.checkName(nameTextFeild.text) && myCheck.checkAge(ageTextField.text) && myCheck.checkPosition(posTextField.text)) {
+                        var checkInput = (myCheck.checkName(nameTextFeild.text) && myCheck.checkAge(ageTextField.text) && myCheck.checkPosition(posTextField.text))
+                        var checkEmpty = ((nameTextFeild.text != "") && (ageTextField.text != "") && (posTextField.text != "") && (expTextAreaId.text != ""))
+                        if(checkInput && checkEmpty) {
                             myModel.updatePerson(mListViewId.currentIndex, nameTextFeild.text, ageTextField.text, posTextField.text, expTextAreaId.text)
                         }
+
                     }
                 }
 
-                //            ScrollIndicator.vertical: ScrollIndicator {
-                //                parent: contentDialog.contentItem
-                //                anchors.top: flickable.top
-                //                anchors.bottom: flickable.bottom
-                //                anchors.right: parent.right
-                //                anchors.rightMargin: -contentDialog.rightPadding + 1
-                //            }
+
             }
         }
     }

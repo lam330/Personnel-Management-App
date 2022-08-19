@@ -1,27 +1,12 @@
 #include "server.h"
 
-//Sever::Sever(SimpleSwitchSimpleSource *parent)
-//    : QObject{parent},
-//      mNetManager(new QNetworkAccessManager(this)),
-//      mNetReply(nullptr),
-//      mDataBuffer(new QByteArray)
-//{
-
-//}
-
 Server::Server()
     : mNetManager(new QNetworkAccessManager(this)),
       mNetReply(nullptr),
       mDataBuffer(new QByteArray)
 {
     QObject::connect(this, &Server::notifyPersonSender, this, &Server::startSend);//async => why??
-
-    //start timer
-    checkTimer = new QTimer(this); // Initialize timer
-    QObject::connect(checkTimer, &QTimer::timeout, this, &Server::timeout_slot); // connect timeout() signal from stateChangeTimer to timeout_slot() of simpleSwitch
-    checkTimer->start(2000); // Start timer and set timout to 2 seconds
     qDebug() << "Source Node Started";
-
 }
 
 
@@ -52,7 +37,7 @@ Server &Server::instance()
 
 void Server::source_to_rep()
 {
-    ordinal = 1;
+    mOrdinal = 1;
     Server::instance().fetchData(QUrl("http://localhost:8080/")); //acsync
 
 }
@@ -60,13 +45,8 @@ void Server::source_to_rep()
 void Server::source_to_rep2()
 {
     qDebug() << "source_to_rep2()";
-    ordinal = 2;
+    mOrdinal = 2;
     Server::instance().fetchData(QUrl("http://localhost:8080/")); //acsync
-}
-
-void Server::timeout_slot()
-{
-//    qDebug() << person()
 }
 
 void Server::dataReadyRead()
@@ -78,32 +58,31 @@ void Server::dataReadyRead()
 void Server::dataReadFinished()
 {
     qDebug() << "dataReadFinished()";
-
     QVector<Project> projectList;//list of projects of one member
 
     //Parse the JSON
     if( mNetReply->error()){
         qDebug() << "There was some error : " << mNetReply->errorString();
     }else{
-        //
         //Turn the data into a json document
         QJsonDocument jsonDoc = QJsonDocument::fromJson(*mDataBuffer);
-
         //Grab the value array
         QJsonObject data = jsonDoc.object();
-
-        //query by key => get all projects in project list
+        //Query by key => get all projects in project list
         QJsonArray projectArray = data["ListProjects"].toArray();
+
         for(int i = 0; i < projectArray.size(); i++) {
-            QJsonObject project = projectArray.at(i).toObject();//object
+            //Seperate 2 current projects
+            QJsonObject project = projectArray.at(i).toObject();
+
+            //Each array contains it's member information
             QJsonArray memberArray1 = project["Project1"].toArray();
             QJsonArray memberArray2 = project["Project2"].toArray();
 
             //Get members of project1
             for ( int i = 0; i < memberArray1.size() ; i++){
-                QJsonObject member = memberArray1.at(i).toObject();//object
-                QJsonArray projectArray = member["Experiences"].toArray();//type JsonArray
-
+                QJsonObject member = memberArray1.at(i).toObject();
+                QJsonArray projectArray = member["Experiences"].toArray();//Experiences of each member
                 //get projects (experiences) of each member
                 for (int j = 0; j < projectArray.size(); j++){
                     QJsonObject   tempProject = projectArray.at(j).toObject();
@@ -150,39 +129,33 @@ void Server::dataReadFinished()
             }
         }
 
-//        if(memberArray.size() !=0){
-//             //resetModel();
-//        }
-
         //Clear the buffer
         mDataBuffer->clear();
     }
 
     //notify qml done
     emit notifyQml("Done roi nha");
-    emit notifyPersonSender(ordinal);
+    emit notifyPersonSender(mOrdinal);
 }
 
-void Server::startSend(const int ordinal)
+void Server::startSend(const int mOrdinal)
 {
     qDebug() << "startSend()";
 
-    if(ordinal == 1) {
+    if(mOrdinal == 1) {//send members of project 1
         for(int i = 0; i < mMembers.size(); i++) {
                 qDebug() << "i = " << i;
                 //notify User for selecting data
-                setOrdinal(ordinal);
+                setOrdinal(mOrdinal);
                 setPerson(mMembers.at(i));
             }
-    } else {
+    } else {//send members of project 2
         for(int i = 0; i < mMembers2.size(); i++) {
                 qDebug() << "i2 = " << i;
-                setOrdinal(ordinal);
+                setOrdinal(mOrdinal);
                 setPerson(mMembers2.at(i));
             }
     }
     mMembers.clear();
     mMembers2.clear();
 }
-
-//Server* Server::mInstancePtr = nullptr;// static attribute hafta be defined outside of class

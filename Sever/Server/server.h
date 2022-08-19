@@ -27,32 +27,24 @@ public:
     Q_INVOKABLE void fetchData(const QUrl path);
     QVector<Person> getMembers() const;
 
-    static Server &instance();// singleton
+    static Server &instance();// Singleton
 
     //prohibit copying object
     Server(const Server &) = delete;
     Server & operator = (const Server &) = delete;
 
-
     //slots for exchanging data
-    //virtual void rep_to_source(Person clientPerson);
-    virtual void source_to_rep();
-    virtual void source_to_rep2();
-
-
-public Q_SLOTS:
-    void timeout_slot();
-
-
+    virtual void source_to_rep();// Send members project1 to rep1
+    virtual void source_to_rep2();// Send members project1 to rep2
 
 signals:
-    void notifyQml(QString parameter);//notify Sever UI when stop download + parse json data
-    void notifyPersonSender(const int ordinal);//async networking
+    void notifyQml(QString parameter);//notify Sever UI when stop download + parse json data (For UI)
+    void notifyPersonSender(const int mOrdinal);//async networking
 
 private slots:
-    void dataReadyRead();
+    void dataReadyRead();//Store Data => mDataBuffer
     void dataReadFinished();//Parse Json
-    void startSend(const int ordinal);
+    void startSend(const int mOrdinal);//This function will be invoked as soon as finish get data from network
 
 private:
     //explicit Sever(SimpleSwitchSimpleSource *parent = nullptr);
@@ -63,10 +55,7 @@ private:
     QByteArray *mDataBuffer;
     QVector<Person> mMembers;//project1 members
     QVector<Person> mMembers2;//project2 members
-    int ordinal;
-    QTimer *checkTimer;
-
-
+    int mOrdinal;
 };
 
 

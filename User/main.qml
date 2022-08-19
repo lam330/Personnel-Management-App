@@ -12,7 +12,7 @@ Window {
 
     Component.onCompleted: {
         //load data from database
-        myModel.deleteData()
+        myModel.clearModel()
         myModel.loadDataFromDatabase()
     }
 
@@ -106,7 +106,7 @@ Window {
         //anchors.top: mListViewId.bottom
         onClicked: {
             console.log("Clicked on getdataBtn")
-            myModel.deleteData()
+            myModel.clearModel()
             myModel.getDataFromSource()
         }
     }
@@ -138,7 +138,7 @@ Window {
         anchors.bottomMargin: 30
         onClicked: {
             console.log("Clicked on loadDataBtn")
-            myModel.deleteData()
+            myModel.clearModel()
             myModel.loadDataFromDatabase()
         }
     }
