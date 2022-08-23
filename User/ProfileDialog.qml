@@ -191,15 +191,6 @@ Item {
                         //save personinfo
                         console.log("close dialog nha")
                         contentDialog.close()
-                        //move to prev state
-                        nameTextFeild.clear()
-                        ageTextField.clear()
-                        posTextField.clear()
-                        posTextField.clear()
-                        textFieldColumn.visible = false
-                        expTextAreaId.visible = false
-                        stackViewId1.replace(labelColumn);
-                        stackViewId2.replace(expLabelId);
 
                         //save info
                         //update Person if inputs ok
@@ -208,11 +199,18 @@ Item {
                         if(checkInput && checkEmpty) {
                             myModel.updatePerson(mListViewId.currentIndex, nameTextFeild.text, ageTextField.text, posTextField.text, expTextAreaId.text)
                         }
+                        //move to prev state
+                        nameTextFeild.clear()
+                        ageTextField.clear()
+                        posTextField.clear()
+                        expTextAreaId.clear()
+                        textFieldColumn.visible = false
+                        expTextAreaId.visible = false
+                        stackViewId1.replace(labelColumn);
+                        stackViewId2.replace(expLabelId);
 
                     }
                 }
-
-
             }
         }
     }

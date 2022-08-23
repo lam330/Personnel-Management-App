@@ -22,11 +22,6 @@ DatabaseManager::DatabaseManager()
     //generateTables();
 }
 
-DatabaseManager::DatabaseManager(QSharedPointer<SimpleSwitchReplica> ptr)
-{
-
-}
-
 void DatabaseManager::generateTables()
 {
     QSqlQuery query(db);
@@ -117,6 +112,27 @@ void DatabaseManager::updateProject(const int index, const Project &project)
         qDebug() << QString("update project: %1 failed").arg(project.customer());
     } else {
         qDebug() << QString("update %1 successfully").arg(project.customer());
+    }
+}
+
+void DatabaseManager::deleteData()
+{
+    QSqlQuery query(db);
+    //delete TeamMembers
+    QString formattedStr = QString("delete from TeamMembers");
+    bool rc =  query.exec(formattedStr);
+    if(rc != 1) {
+        qDebug() << QString("delete table TeamMembers failed");
+    } else {
+        qDebug() << QString("delete table TeamMembers successfully");
+    }
+    //delete
+    formattedStr = QString("delete from Projects");
+    rc =  query.exec(formattedStr);
+    if(rc != 1) {
+        qDebug() << QString("delete table Projects failed");
+    } else {
+        qDebug() << QString("delete table Projects successfully");
     }
 }
 

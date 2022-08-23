@@ -17,9 +17,8 @@ public:
     Q_INVOKABLE bool checkPosition(const QString& inputPos);
 
 private:
-    QString pattern;
-    QRegularExpression re;
-    QRegularExpressionMatch match;
+    QRegularExpression mRe;
+    QRegularExpressionMatch mMatch;
 
 };
 

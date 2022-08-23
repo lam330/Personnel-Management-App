@@ -123,13 +123,14 @@ Window {
         onClicked: {
             console.log("Clicked on storeBtn")
             myDatabase.generateTables()
+            myDatabase.deleteData()
             myModel.storeModel()
         }
     }
 
     Button {
-        id : loadDataBtn
-        text: "Load model from database"
+        id : clearDataBtn
+        text: "Clear data"
         width: 500
         height: 40
 
@@ -137,9 +138,8 @@ Window {
         anchors.bottom: storeModelBtn.top
         anchors.bottomMargin: 30
         onClicked: {
-            console.log("Clicked on loadDataBtn")
+            console.log("Clicked on clearDataBtn")
             myModel.clearModel()
-            myModel.loadDataFromDatabase()
         }
     }
 

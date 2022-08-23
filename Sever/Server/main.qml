@@ -46,29 +46,5 @@ Window {
                 progressBarId.indeterminate = true;
             }
         }
-    }
-
-    //test create file database
-    Rectangle {
-        id: rectData
-        width: 200
-        height: 100
-        anchors.top: rectAPI.bottom
-        anchors.topMargin: 50
-        anchors.horizontalCenter: rectAPI.horizontalCenter
-        color: "blue"
-
-        Text {
-            id: rect1TextId
-            text: qsTr("Create data file")
-            anchors.centerIn: parent
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-
-            }
-        }
-    }
+    }   
 }
